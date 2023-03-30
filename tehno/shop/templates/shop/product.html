@@ -2,10 +2,12 @@
 
 {% block content %}
     <h1>{{ goods.title }}</h1>
+    {% if request.user.is_authenticated %}
     <div>
     <a class="update-button" href="{% url 'update' goods.slug %}">Update</a>
     <a class="delete-button" href="{% url 'delete' goods.slug %}">Delete</a>
     </div>
+    {% endif %}
     {% if goods.photo %}
         <p><img class="img-article-left" src="{{ goods.photo.url }}" alt=""></p>
     {% endif %}
