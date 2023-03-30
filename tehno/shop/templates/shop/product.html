@@ -2,13 +2,16 @@
 
 {% block content %}
     <h1>{{ goods.title }}</h1>
-
+    <div>
+    <a class="update-button" href="{% url 'update' goods.slug %}">Update</a>
+    <a class="delete-button" href="{% url 'delete' goods.slug %}">Delete</a>
+    </div>
     {% if goods.photo %}
         <p><img class="img-article-left" src="{{ goods.photo.url }}" alt=""></p>
     {% endif %}
 
     <p>{{ goods.specif|linebreaks }}</p>
     <p>{{ goods.content }}</p>
-    <p class="buy-button"><a href="{{ goods.link_p }}">Buy</a>~ {{ goods.price_p }} UAH</p>
+<p class="buy-button"><a href="{{ goods.link_p }}">Buy</a>~ {{ goods.price_p }} UAH </p>
 
 {% endblock %}

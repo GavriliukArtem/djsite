@@ -21,6 +21,9 @@ class Shop(models.Model):
     def get_absolute_url(self):
         return reverse('ditail', kwargs={'prd_slug': self.slug})
 
+    def get_absolute_url_update(self):
+        return reverse('update', kwargs={'prd_slug': self.slug})
+
     class Meta:
         verbose_name = 'Techno site'
         verbose_name_plural = 'Techno site'

@@ -1,0 +1,9 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+    <h1>Do you really want to delete this - {{ title }}</h1>
+    <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button class="button-add" type="submit">Yes</button>
+    </form>
+{% endblock %}

@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, FormView
+from django.views.generic import ListView, DetailView, CreateView, FormView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import *
@@ -149,6 +149,34 @@ class LoginUser(DataMixin, LoginView):
     def get_success_url(self):
         """if valid to redirect"""
         return reverse_lazy('home')
+
+
+class UpdateGoods(DataMixin, UpdateView):
+    """Update goods with a standard class 'UpdateView'"""
+    model = Shop
+    template_name = 'shop/addgoods.html'
+    form_class = AddGoodsForm
+    slug_url_kwarg = 'prd_slug'
+    context_object_name = 'goods'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title=context['goods'])
+        return dict(list(c_def.items()) + list(context.items()))
+
+
+class DeleteGoods(DataMixin, DeleteView):
+    """Delete goods with a standard class 'DeleteView'"""
+    model = Shop
+    template_name = 'shop/deletegoods.html'
+    slug_url_kwarg = 'prd_slug'
+    context_object_name = 'goods'
+    success_url = reverse_lazy('home')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title=context['goods'])
+        return dict(list(c_def.items()) + list(context.items()))
 
 
 def logout_user(request):
