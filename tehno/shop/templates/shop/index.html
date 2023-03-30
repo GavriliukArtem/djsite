@@ -1,0 +1,29 @@
+{% extends 'shop/base.html' %}
+
+{% block content %}
+    <h1 class="title-page">{{ title }} </h1>
+    <div class="search">
+    <form action="{% url 'search' %}" method="GET">
+        <input type="text" name="q" placeholder="Search goods..." value="{{ request.GET.q }}">
+        <button type="submit">Search</button>
+    </form>
+    </div>
+    <ul class="list-articles">
+        {% for g in goods %}
+            <li>
+                <div class="article-panel">
+                    <p class="first">Category: {{ g.cat }}</p>
+                    <p class="last">Date: {{ g.time_update|date:'d-m-Y H:i:s' }}</p>
+                </div>
+                {% if g.photo %}
+                    <p><img class="img-article-left thumb" src="{{ g.photo.url }}" alt=""></p>
+                {% endif %}
+                <h2>{{ g.title }}</h2>
+                <p>{{ g.specif|linebreaks|truncatewords:50 }}</p>
+                <div class="clear"></div>
+                <p class="link-read-post"><a href="{{ g.get_absolute_url }}">View</a></p>
+                <hr>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
